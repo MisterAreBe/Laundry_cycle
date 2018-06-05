@@ -1,0 +1,28 @@
+def pc_start
+  sample :elec_blip
+  sleep 0.3
+  sample :elec_blip, sustain: 3
+  sleep 0.7
+  sample :ambi_swoosh, amp: 7
+  sleep 0.9  
+end
+
+def login
+  10.times do
+    sample :drum_bass_hard, amp: rrand(1, 2.5)
+    sleep rrand(0.1, 0.5)
+  end
+end
+
+def play_game
+  15.times do
+    sample :elec_twip, amp: 3, rate: rrand(3, 12)
+    sleep 0.1
+  end
+  sample :vinyl_backspin, amp: 15
+  sleep 1
+end
+
+pc_start
+login
+play_game

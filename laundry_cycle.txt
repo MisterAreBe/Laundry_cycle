@@ -1,0 +1,44 @@
+def wear(smell)
+  if smell >= 10
+    sample :vinyl_backspin
+  else
+    sample :ambi_swoosh, amp:10, rate: smell
+    sleep 0.8
+    wear(smell +1)
+  end
+end
+
+def dirty()
+  1 == [1, 2].choose
+end
+
+def treat_stain()
+  sample :ambi_choir
+  sleep 1
+end
+
+def wash(tempa)
+  play tempa, amp:3
+  sleep 0.9
+end
+
+def dry(sound)
+  sample sound, amp: 12
+  sleep 0.5
+end
+
+in_thread do
+  2.times do
+    wear(1)
+    treat_stain if dirty
+    wash(70)
+    dry(:elec_beep)
+  end
+end
+
+2.times do
+  wear(5)
+  treat_stain if dirty
+  wash(80)
+  dry(:ambi_soft_buzz)
+end
