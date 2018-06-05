@@ -1,11 +1,27 @@
 def wear(smell)
   if smell >= 10
-    sample :vinyl_backspin
+    sample :ambi_choir
   else
-    sample :ambi_swoosh, amp:10, rate: smell
-    sleep 0.8
+    sample :guit_harmonics, rate: smell
+    sleep 0.1
     wear(smell +1)
   end
+end
+
+def wash(tempa)
+  play tempa
+  sleep 1
+end
+
+def dry(sound)
+  sample sound
+  sleep 1
+end
+
+def iron()
+  use_synth :growl
+  play 60
+  sleep 1
 end
 
 def dirty()
@@ -13,32 +29,37 @@ def dirty()
 end
 
 def treat_stain()
-  sample :ambi_choir
-  sleep 1
+  sample :guit_e_slide
+  sleep 2
 end
 
-def wash(tempa)
-  play tempa, amp:3
-  sleep 0.9
+
+live_loop :laundry_1 do
+  sync :tick
+  wear(1)
+  treat_stain if dirty
+  wash(60)
+  dry(:elec_beep)
+  iron()
 end
 
-def dry(sound)
-  sample sound, amp: 12
+live_loop :laundry_2 do
+  sync :tick
+  wear(5)
+  treat_stain if dirty
+  wash(90)
+  dry(:ambi_soft_buzz)
+  iron()
+end
+
+live_loop :time do
+  sync :tick
+  sample :drum_bass_hard
+  sleep 0.5
+  sample :drum_snare_hard
   sleep 0.5
 end
 
-in_thread do
-  2.times do
-    wear(1)
-    treat_stain if dirty
-    wash(70)
-    dry(:elec_beep)
-  end
-end
-
-2.times do
-  wear(5)
-  treat_stain if dirty
-  wash(80)
-  dry(:ambi_soft_buzz)
+live_loop :tick do
+  sleep 1
 end
